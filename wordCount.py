@@ -16,6 +16,7 @@ def retrieve_input():
 def main():
     userInputString = retrieve_input()
     print(wordCount(userInputString))
+    return wordCount(userInputString)
 
 
 if __name__ == "__main__":

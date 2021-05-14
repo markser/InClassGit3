@@ -1,26 +1,28 @@
 import io
 import sys
 import pytest
-import requests
 import palindrome
+from io import StringIO
 
+# https://docs.pytest.org/en/6.2.x/assert.html
+# https://stackoverflow.com/questions/35851323/how-to-test-a-function-with-input-call
 
-# https://medium.com/analytics-vidhya/mocking-in-python-with-pytest-mock-part-i-6203c8ad3606
+def test_bad_string(monkeypatch):
+    test_string = StringIO('Thisisanactivity\n')
+    monkeypatch.setattr('sys.stdin', test_string)
+    assert palindrome.main() == False
 
+def test_empty_string(monkeypatch):
+    test_string = StringIO('\n')
+    monkeypatch.setattr('sys.stdin', test_string)
+    assert palindrome.main() == True
 
-@pytest.mark.parametrize("palindrome", [
-    "",
-    "a",
-    "Bob",
-    "Never odd or even",
-    "Do geese see God?",
-])
-def test_is_palindrome(test_string):
-    assert palindrome.palindrome(test_string)
+def test_valid_string(monkeypatch):
+    test_string = StringIO('tacocat\n')
+    monkeypatch.setattr('sys.stdin', test_string)
+    assert palindrome.main() == True
 
-@pytest.mark.parametrize("non_palindrome", [
-    "abc",
-    "abab",
-])
-def test_is_palindrome_not_palindrome(test_string):
-    assert not palindrome.palindrome(test_string)
+def test_valid_string_alternating_capitalized_letters(monkeypatch):
+    test_string = StringIO('tAcOcAt\n')
+    monkeypatch.setattr('sys.stdin', test_string)
+    assert palindrome.main() == True

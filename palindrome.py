@@ -18,6 +18,8 @@ def main():
     userInputString = retrieve_input()
     if (userInputString is not None):
         print(palindrome(userInputString))
+        return palindrome(userInputString)
+    return False
 
 
 if __name__ == "__main__":
